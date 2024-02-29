@@ -1,0 +1,93 @@
+name: 'Transaction management'
+description: 'APIs for managing transactions'
+endpoints:
+  -
+    httpMethods:
+      - POST
+    uri: api/transactions
+    metadata:
+      groupName: 'Transaction management'
+      groupDescription: 'APIs for managing transactions'
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Transaction
+        Make a transaction between two bank accounts
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      amount:
+        name: amount
+        description: 'The amount to be transferred.'
+        required: true
+        example: 100.0
+        type: number
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      sender:
+        name: sender
+        description: 'The id of the sender bank account.'
+        required: true
+        example: 1
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      receiver:
+        name: receiver
+        description: 'The id of the receiver bank account.'
+        required: true
+        example: 2
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+      scheduled:
+        name: scheduled
+        description: 'optional If the transaction is scheduled.'
+        required: false
+        example: true
+        type: boolean
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
+    cleanBodyParameters:
+      amount: 100.0
+      sender: 1
+      receiver: 2
+      scheduled: true
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: '{"message":"Transaction authorized","status":200,"data":[],"type":"success"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message":"Transaction not authorized","status":401,"data":[],"type":"error"}'
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 401
+        content: '{"message":"Insufficient balance","status":401,"data":[],"type":"error"}'
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
