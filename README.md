@@ -4,7 +4,7 @@
 ## API Documentation
 
 ### Requirments
--   At least php 8.0 on your machine
+-   php 8.2 on your machine
 -   Composer
 
 
