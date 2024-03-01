@@ -28,6 +28,10 @@ class CreateNewBankAccount extends Command
     {
         $name = $this->ask('What is your name?');
         $balance = $this->ask('What is your balance?');
+        while (!is_numeric($balance) || $balance < 0) {
+            $this->error('Balance must be a number and greater than 0.');
+            $balance = $this->ask('What is your balance?');
+        }
 
         $this->info("Creating a new bank account for {$name} with a balance of {$balance}.");
 
