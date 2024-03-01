@@ -49,32 +49,6 @@ class BaseRepository
         return $this->model->findOrFail($id);
     }
 
-    public function getCountryByCode($code, $relationships = [])
-    {
-        if ($relationships) {
-            return $this->model->where('code', $code)->with($relationships)->get();
-        }
-        return $this->model->where('code', $code)->get();
-    }
-
-
-    public function getWithPaginate($limit = 0, $offset = 0)
-    {
-        return $this->model->offset((int)$offset)->limit((int)$limit)->get();
-    }
-
-    public function get($take = 0, $columns = ["*"], $relationships = [])
-    {
-        if ($take === 0) {
-            $take = $this->take;
-        }
-
-        if ($relationships) {
-            return $this->model->with($relationships)->paginate($take, $columns);
-        }
-        return $this->model->paginate($take, $columns);
-    }
-
     public function filter($filters)
     {
         $query = $this->model->newQuery();

@@ -22,7 +22,7 @@ services:
             - technical
         depends_on:
             - technicalmysql
-            - technical_redis
+            - technicalredis
 
     technicalmysql:
         container_name: technical_mysql
