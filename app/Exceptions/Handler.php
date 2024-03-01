@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use App\Services\Api\ApiResponseService;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\App;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -23,8 +25,22 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            //
-        });
+
+    }
+
+
+    public function render($request, Throwable $e)
+    {
+        if ($request->is('api/*')) {
+
+            //QueryException and ErrorException
+            if ($e instanceof \Illuminate\Database\QueryException || $e instanceof \ErrorException) {
+                $message = "Unfortunately, an internal server error has occurred. Please try again later..";
+                $apiResponse = new ApiResponseService();
+                return $apiResponse->errorResponse($message, [], 500);
+            }
+
+        }
+        return parent::render($request, $e);
     }
 }

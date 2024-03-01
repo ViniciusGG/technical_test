@@ -81,15 +81,9 @@ paths:
                         -
                           id: 1
                           name: 'John Doe'
-                          balance: '800.00'
-                          created_at: '2024-02-28T06:36:12.000000Z'
-                          updated_at: '2024-02-29T03:51:52.000000Z'
-                        -
-                          id: 6
-                          name: 'John Due'
-                          balance: '3000.00'
-                          created_at: '2024-02-29T01:01:55.000000Z'
-                          updated_at: '2024-02-29T01:01:55.000000Z'
+                          balance: '1000.00'
+                          created_at: '2024-02-29T02:32:24.000000Z'
+                          updated_at: '2024-02-29T03:42:11.000000Z'
                       first_page_url: 'http://localhost/api/accounts?page=1'
                       from: 1
                       last_page: 1
@@ -111,8 +105,8 @@ paths:
                       path: 'http://localhost/api/accounts'
                       per_page: 10
                       prev_page_url: null
-                      to: 2
-                      total: 2
+                      to: 1
+                      total: 1
                 properties:
                   headerCode:
                     type: integer
@@ -138,15 +132,9 @@ paths:
                               -
                                 id: 1
                                 name: 'John Doe'
-                                balance: '800.00'
-                                created_at: '2024-02-28T06:36:12.000000Z'
-                                updated_at: '2024-02-29T03:51:52.000000Z'
-                              -
-                                id: 6
-                                name: 'John Due'
-                                balance: '3000.00'
-                                created_at: '2024-02-29T01:01:55.000000Z'
-                                updated_at: '2024-02-29T01:01:55.000000Z'
+                                balance: '1000.00'
+                                created_at: '2024-02-29T02:32:24.000000Z'
+                                updated_at: '2024-02-29T03:42:11.000000Z'
                             items:
                               type: object
                               properties:
@@ -158,13 +146,13 @@ paths:
                                   example: 'John Doe'
                                 balance:
                                   type: string
-                                  example: '800.00'
+                                  example: '1000.00'
                                 created_at:
                                   type: string
-                                  example: '2024-02-28T06:36:12.000000Z'
+                                  example: '2024-02-29T02:32:24.000000Z'
                                 updated_at:
                                   type: string
-                                  example: '2024-02-29T03:51:52.000000Z'
+                                  example: '2024-02-29T03:42:11.000000Z'
                           first_page_url:
                             type: string
                             example: 'http://localhost/api/accounts?page=1'
@@ -218,13 +206,134 @@ paths:
                             example: null
                           to:
                             type: integer
-                            example: 2
+                            example: 1
                           total:
                             type: integer
-                            example: 2
+                            example: 1
       tags:
         - 'Bank account management'
       security: []
+    post:
+      summary: 'Create a new bank account'
+      operationId: createANewBankAccount
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Bank account management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the account.'
+                  example: 'John Doe'
+                balance:
+                  type: numeric
+                  description: 'Initial balance of the account.'
+                  example: '1000'
+              required:
+                - name
+                - balance
+      security: []
+  '/api/accounts/{id}':
+    get:
+      summary: 'Get a bank account'
+      operationId: getABankAccount
+      description: ''
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  headerCode: 200
+                  content:
+                    status: true
+                    message: 'Account found'
+                    data:
+                      id: 1
+                      name: 'John Doe'
+                      balance: '1000.00'
+                      created_at: '2024-02-29T02:32:24.000000Z'
+                      updated_at: '2024-02-29T03:42:11.000000Z'
+                properties:
+                  headerCode:
+                    type: integer
+                    example: 200
+                  content:
+                    type: object
+                    properties:
+                      status:
+                        type: boolean
+                        example: true
+                      message:
+                        type: string
+                        example: 'Account found'
+                      data:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 1
+                          name:
+                            type: string
+                            example: 'John Doe'
+                          balance:
+                            type: string
+                            example: '1000.00'
+                          created_at:
+                            type: string
+                            example: '2024-02-29T02:32:24.000000Z'
+                          updated_at:
+                            type: string
+                            example: '2024-02-29T03:42:11.000000Z'
+      tags:
+        - 'Bank account management'
+      security: []
+    put:
+      summary: 'Update a bank account'
+      operationId: updateABankAccount
+      description: ''
+      parameters: []
+      responses: {  }
+      tags:
+        - 'Bank account management'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'Name of the account.'
+                  example: 'John Doe'
+                balance:
+                  type: numeric
+                  description: 'Initial balance of the account.'
+                  example: '1000'
+              required:
+                - name
+                - balance
+      security: []
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'The ID of the account.'
+        example: 1
+        required: true
+        schema:
+          type: integer
   /api/transactions:
     post:
       summary: "Transaction\nMake a transaction between two bank accounts"
@@ -305,6 +414,10 @@ paths:
                   type: boolean
                   description: 'optional If the transaction is scheduled.'
                   example: true
+                data_scheduled:
+                  type: date
+                  description: 'optional The date of the scheduled transaction.'
+                  example: '2024-02-29'
               required:
                 - amount
                 - sender

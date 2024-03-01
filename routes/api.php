@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::apiResource('/accounts', BankAccountController::class);
+Route::apiResource('/accounts', BankAccountController::class)->names('accounts');
 
-Route::post('/transactions', [TransactionController::class, 'transactions']);
+Route::post('/transactions', [TransactionController::class, 'transactions'])->name('transactions');

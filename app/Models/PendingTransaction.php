@@ -11,6 +11,7 @@ class PendingTransaction extends Model
         'receiver_id',
         'amount',
         'status',
+        'data_scheduled',
     ];
 
     public function sender()

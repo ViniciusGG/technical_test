@@ -9,8 +9,6 @@ use App\Services\ExternalService\PipedreamService;
 class BankAccountRepository extends BaseRepository
 {
 
-    private $scheduled = false;
-
     public function __construct()
     {
         parent::__construct(BankAccount::class);
@@ -18,27 +16,23 @@ class BankAccountRepository extends BaseRepository
 
     public function transaction(array $data): array
     {
-        if (isset($data['scheduled'])) {
-            $this->scheduled = $data['scheduled'];
-            unset($data['scheduled']);
-        }
-
         $sender = $this->model->find($data['sender']);
         $receiver = $this->model->find($data['receiver']);
 
-        if ($this->scheduled) {
+        if (isset($data['scheduled']) && $data['scheduled']) {
             return $this->createPendingTransaction($data, $sender, $receiver);
+        }
+
+        $data = $this->filterScheduled($data);
+
+        if ($sender->balance < $data['amount']) {
+            return ['message' => 'Insufficient balance', 'status' => 401, 'data' => [], 'type' => 'error'];
         }
 
         $pipedreamService = new PipedreamService();
 
         if (!$pipedreamService->authorizeTransaction($data)) {
             return ['message' => 'Transaction not authorized', 'status' => 401, 'data' => [], 'type' => 'error'];
-        }
-
-
-        if ($sender->balance < $data['amount']) {
-            return ['message' => 'Insufficient balance', 'status' => 401, 'data' => [], 'type' => 'error'];
         }
 
         $sender->balance -= $data['amount'];
@@ -57,10 +51,22 @@ class BankAccountRepository extends BaseRepository
             'sender_id' => $sender->id,
             'receiver_id' => $receiver->id,
             'amount' => $data['amount'],
+            'data_scheduled' => $data['data_scheduled'],
             'status' => 'pending',
         ];
         $pendingTransactionRepository->create($data);
         return ['message' => 'Transaction scheduled', 'status' => 200, 'data' => [], 'type' => 'success'];
     }
 
+    //
+    private function filterScheduled(array $data): array
+    {
+        if (isset($data['scheduled'])) {
+            unset($data['scheduled']);
+        }
+        if (isset($data['data_scheduled'])) {
+            unset($data['data_scheduled']);
+        }
+        return $data;
+    }
 }

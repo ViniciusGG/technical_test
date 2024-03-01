@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('receiver_id')->constrained('bank_accounts');
             $table->float('amount');
             $table->enum('status', ['pending', 'authorized', 'rejected'])->default('pending');
+            $table->date('data_scheduled');
             $table->timestamps();
         });
     }

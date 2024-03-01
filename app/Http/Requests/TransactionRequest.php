@@ -26,6 +26,15 @@ class TransactionRequest extends FormRequest
             'sender' => ['required', 'numeric', 'exists:bank_accounts,id', 'different:receiver'],
             'receiver' => ['required', 'numeric', 'exists:bank_accounts,id'],
             'scheduled' => ['nullable', 'boolean'],
+            'data_scheduled' => ['nullable', 'date', 'required_if:scheduled,true'],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'sender.different' => 'The sender and receiver must be different.',
+            'data_scheduled.required_if' => 'The scheduled date is required when scheduling a transaction.'
         ];
     }
 }

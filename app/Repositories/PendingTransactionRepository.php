@@ -16,7 +16,7 @@ class PendingTransactionRepository extends BaseRepository
 
     public function getPendingTransactions()
     {
-        return $this->model->where('status', 'pending')->get();
+        return $this->model->where('status', 'pending')->where('data_scheduled', date('Y-m-d'))->get();
     }
 
     public function transactionScheduled($data): void

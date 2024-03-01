@@ -11,6 +11,13 @@ use App\Repositories\BankAccountRepository;
  */
 class TransactionController extends Controller
 {
+    private $repository;
+
+    public function __construct(BankAccountRepository $repository)
+    {
+        parent::__construct();
+        $this->repository = $repository;
+    }
     /**
      * Transaction
      * Make a transaction between two bank accounts
@@ -19,6 +26,7 @@ class TransactionController extends Controller
      * @bodyParam sender int required The id of the sender bank account. Example: 1
      * @bodyParam receiver int required The id of the receiver bank account. Example: 2
      * @bodyParam scheduled boolean optional If the transaction is scheduled. Example: true
+     * @bodyParam data_scheduled date optional The date of the scheduled transaction. Example: 2024-02-29
      *
      * @response 200 {"message":"Transaction authorized","status":200,"data":[],"type":"success"}
      * @response 401 {"message":"Transaction not authorized","status":401,"data":[],"type":"error"}
@@ -28,11 +36,11 @@ class TransactionController extends Controller
      * @param  \App\Repositories\BankAccountRepository  $repository
      * @return \Illuminate\Http\JsonResponse
      */
-    public function transactions(TransactionRequest $request, BankAccountRepository $repository)
+    public function transactions(TransactionRequest $request)
     {
         $requestValidated = $request->validated();
 
-        $transaction = $repository->transaction($requestValidated);
+        $transaction = $this->repository->transaction($requestValidated);
 
         if ($transaction['type'] === 'error') {
             return $this->apiResponse->errorResponse(

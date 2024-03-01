@@ -35,7 +35,7 @@ class TransactionProcessCommand extends Command
 
         foreach ($transactions as $transaction) {
             $pendingTransactionRepository->transactionScheduled($transaction);
-            $this->info("Transaction {$transaction->id} processed");
+            $this->info("Transaction ID: {$transaction->id} processed");
         }
 
         $this->info('Transactions processed');

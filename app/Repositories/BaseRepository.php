@@ -30,7 +30,8 @@ class BaseRepository
     public function update($id, $data)
     {
         $record = $this->getById($id);
-        return $record->update($data);
+        $record->update($data);
+        return $record;
     }
 
     public function delete($id)

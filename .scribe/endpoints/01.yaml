@@ -60,11 +60,21 @@ endpoints:
         enumValues: []
         exampleWasSpecified: true
         custom: []
+      data_scheduled:
+        name: data_scheduled
+        description: 'optional The date of the scheduled transaction.'
+        required: false
+        example: '2024-02-29'
+        type: date
+        enumValues: []
+        exampleWasSpecified: true
+        custom: []
     cleanBodyParameters:
       amount: 100.0
       sender: 1
       receiver: 2
       scheduled: true
+      data_scheduled: '2024-02-29'
     fileParameters: []
     responses:
       -
