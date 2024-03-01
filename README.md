@@ -7,6 +7,9 @@
 -   php 8.2 on your machine
 -   Composer
 
+### PHP Extensions
+-   Before proceeding with the installation, please ensure that the following PHP extensions are enabled on your machine:
+
 
 ### Starting in this project
 
@@ -16,9 +19,6 @@
 4. Run the `docker compose up` command
 5. Run the `docker exec -it technical_api php artisan key:generate` command
 6. Run the `docker exec -it technical_api php artisan migrate:fresh --seed` command
-
-### API Documentation
-1. Run the `docker exec -it technical_api php artisan scribe:generate` command
 
 ### Create a new user CLI
 1. Run the `docker exec -it technical_api php artisan bank-account:create` command
