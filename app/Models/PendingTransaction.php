@@ -24,4 +24,9 @@ class PendingTransaction extends Model
         return $this->belongsTo(BankAccount::class, 'receiver_id');
     }
 
+    public static function getModelLabel()
+    {
+        return 'Pending Transaction ';
+    }
+
 }

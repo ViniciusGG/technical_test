@@ -14,4 +14,9 @@ class BankAccount extends Model
         'balance'
     ];
 
+    public static function getModelLabel()
+    {
+        return 'Bank Account ';
+    }
+
 }
